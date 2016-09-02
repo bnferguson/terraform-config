@@ -4,9 +4,12 @@ variable "gce_project" {}
 
 variable "gce_bastion_image" {}
 variable "gce_nat_image" {}
-variable "gce_worker_image" {}
-
-variable "gce_worker_cloud_init_org" {}
-variable "gce_worker_cloud_init_com" {}
 
 variable "bastion_cloud_init" {}
+
+variable "gke_master_username" {}
+variable "gke_master_password" {}
+variable "gke_initial_node_count" {
+  type = "string"
+  default = "3"
+}

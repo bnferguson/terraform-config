@@ -12,18 +12,9 @@ resource "google_compute_subnetwork" "public" {
   project = "${var.gce_project}"
 }
 
-resource "google_compute_subnetwork" "workers_org" {
-  name = "workersorg"
+resource "google_compute_subnetwork" "workers" {
+  name = "workers"
   ip_cidr_range = "10.10.2.0/24"
-  network = "${google_compute_network.main.self_link}"
-  region = "us-central1"
-
-  project = "${var.gce_project}"
-}
-
-resource "google_compute_subnetwork" "workers_com" {
-  name = "workerscom"
-  ip_cidr_range = "10.10.3.0/24"
   network = "${google_compute_network.main.self_link}"
   region = "us-central1"
 

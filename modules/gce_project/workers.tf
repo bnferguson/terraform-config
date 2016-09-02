@@ -1,41 +1,45 @@
-module "gce_worker_b" {
-  source = "../gce_worker"
+resource "google_container_cluster" "workers_b" {
+  name = "workers-b"
+  zone = "us-central1-b"
+  initial_node_count = "${var.gke_initial_node_count}"
+  project = "${var.gce_project}"
+  # subnetwork "workers"
 
-  env = "${var.env}"
-  index = "${var.index}"
-  instance_count = "1"
+  master_auth {
+    username = "${var.gke_master_username}"
+    password = "${var.gke_master_password}"
+  }
 
-  gce_project = "${var.gce_project}"
-  gce_zone = "us-central1-b"
-  gce_zone_suffix = "b"
-
-  gce_machine_type = "g1-small"
-  gce_worker_image = "${var.gce_worker_image}"
-
-  subnetwork_org = "${google_compute_subnetwork.workers_org.name}"
-  subnetwork_com = "${google_compute_subnetwork.workers_com.name}"
-
-  cloud_init_org = "${var.gce_worker_cloud_init_org}"
-  cloud_init_com = "${var.gce_worker_cloud_init_com}"
+	node_config {
+    machine_type = "g1-small"
+    oauth_scopes = [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/devstorage.read_only",
+      "https://www.googleapis.com/auth/logging.write",
+      "https://www.googleapis.com/auth/monitoring"
+    ]
+  }
 }
 
-module "gce_worker_c" {
-  source = "../gce_worker"
+resource "google_container_cluster" "workers_c" {
+  name = "workers-c"
+  zone = "us-central1-c"
+  initial_node_count = "${var.gke_initial_node_count}"
+  project = "${var.gce_project}"
+  # subnetwork "workers"
 
-  env = "${var.env}"
-  index = "${var.index}"
-  instance_count = "1"
+  master_auth {
+    username = "${var.gke_master_username}"
+    password = "${var.gke_master_password}"
+  }
 
-  gce_project = "${var.gce_project}"
-  gce_zone = "us-central1-c"
-  gce_zone_suffix = "c"
-
-  gce_machine_type = "g1-small"
-  gce_worker_image = "${var.gce_worker_image}"
-
-  subnetwork_org = "${google_compute_subnetwork.workers_org.name}"
-  subnetwork_com = "${google_compute_subnetwork.workers_com.name}"
-
-  cloud_init_org = "${var.gce_worker_cloud_init_org}"
-  cloud_init_com = "${var.gce_worker_cloud_init_com}"
+	node_config {
+    machine_type = "g1-small"
+    oauth_scopes = [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/devstorage.read_only",
+      "https://www.googleapis.com/auth/logging.write",
+      "https://www.googleapis.com/auth/monitoring"
+    ]
+  }
 }

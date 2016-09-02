@@ -1,10 +1,5 @@
 CONFIG_FILES := \
-	config/worker-env-com \
-	config/worker-env-org \
-	config/bastion-env \
-	config/chef-org.json \
-	config/chef-com.json \
-	config/gce-workers-staging.json
+	config/bastion-env
 
 .PHONY: hello
 hello:
@@ -38,8 +33,4 @@ clean:
 
 $(CONFIG_FILES):
 	cp -r $$TRAVIS_KEYCHAIN_DIR/travis-keychain/terraform/gce config
-	trvs generate-config -p travis_worker -f env gce-workers staging1 | sed 's/^/export /' >config/worker-env-org
-	trvs generate-config --pro -p travis_worker -f env gce-workers staging1 | sed 's/^/export /' >config/worker-env-com
 	trvs generate-config --pro -p gce_bastion -f env gce-bastion staging | sed 's/^/export /' >config/bastion-env
-	trvs generate-config -p travis_worker -f json gce-workers staging1 | ruby generate-chef-config.rb >config/chef-org.json
-	trvs generate-config --pro -p travis_worker -f json gce-workers staging1 | ruby generate-chef-config.rb >config/chef-com.json
